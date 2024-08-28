@@ -1,0 +1,63 @@
+﻿<Window x:Class="ChartGeneration.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        Title="Inari Graph Simulation" Height="450" Width="800">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <ComboBox Width="200" Height="30" HorizontalAlignment="left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1"
+                  ItemsSource="{Binding ComboBoxItems}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" />
+
+            <ComboBox Width="200" Height="30" HorizontalAlignment="left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1"
+                  ItemsSource="{Binding WaferTypeList}" SelectedIndex="{Binding SelectedIndexWafer, Mode=TwoWay}" />
+
+            <ComboBox Width="200" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="2" Grid.Row="1"
+                  ItemsSource="{Binding RatioList}" SelectedIndex="{Binding SelectedIndexRatio, Mode=TwoWay}" />
+
+            <Label Content="Criteria" Grid.Row="0"/>
+            <Label Content="Limit Ratio (Histogram)"  HorizontalAlignment="Right" Grid.Column="2" Grid.Row="0"/>
+        </Grid>
+        <!-- Define TabControl -->
+        <TabControl Grid.Column="1" Grid.Row="1">
+            <!-- First Tab -->
+            <TabItem Header="Histogram">
+                <lvc:CartesianChart Series="{Binding SeriesCollection}">
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="IL_ALL_MAG_C1_S21" 
+                          Foreground="DarkBlue" 
+                          LabelFormatter="{Binding XFormatter}"
+                           />
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Quantity" 
+                          Foreground="DarkBlue" 
+                          LabelFormatter="{Binding YFormatter}"
+                          />
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
+            </TabItem>
+
+            <TabItem Header="Scatter Graph">
+                <oxy:PlotView Name="plotView" Margin="10" />
+            </TabItem>
+            </TabControl>
+    </Grid>
+</Window>
